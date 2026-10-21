@@ -1,11 +1,19 @@
-import { Analytics } from '@vercel/analytics/next'
+import { SiteAnalytics } from '@/components/site-analytics'
+import { siteUrl } from '@/lib/site'
 import type { Metadata, Viewport } from 'next'
+import { Space_Grotesk, Inter } from 'next/font/google'
 import './globals.css'
+
+const displayFont = Space_Grotesk({ subsets: ['latin'], variable: '--font-display', display: 'swap' })
+const bodyFont = Inter({ subsets: ['latin'], variable: '--font-body', display: 'swap' })
 
 export const metadata: Metadata = {
   title: 'Atlas Solutions | Tecnología que impulsa',
   description: 'Simplificamos, digitalizamos y mejoramos las operaciones de tu empresa mediante software, automatización e inteligencia artificial. Atlas Solutions SpA, Chile.',
-  generator: 'v0.app',
+  metadataBase: new URL(siteUrl),
+  alternates: { canonical: '/' },
+  openGraph: { type: 'website', locale: 'es_CL', siteName: 'Atlas Solutions', title: 'Atlas Solutions | Tecnología que impulsa', description: 'Software, automatización e inteligencia artificial para empresas.' },
+  twitter: { card: 'summary', title: 'Atlas Solutions', description: 'Tecnología que simplifica tu operación.' },
   icons: {
     icon: [
       {
@@ -37,9 +45,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="antialiased">
+      <body className={`${displayFont.variable} ${bodyFont.variable} antialiased`}>
         {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <SiteAnalytics />
       </body>
     </html>
   )

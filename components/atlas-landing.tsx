@@ -28,11 +28,11 @@ export function AtlasLanding() {
         <Brand />
         <nav aria-label="Navegación principal" className="desktop-nav">
           <a href="#sobre-nosotros">Sobre nosotros</a>
-          <button onClick={() => open('blog')}>Blog <ArrowUpRight size={13} /></button>
-          <button className="nav-cta" onClick={() => open('booking')}>Agenda diagnóstico de 15 minutos <ArrowUpRight size={15} /></button>
+          <a href="/blog">Blog <ArrowUpRight size={13} /></a>
+          <button className="nav-cta" data-conversion="diagnostic-cta" onClick={() => open('booking')}>Agenda diagnóstico de 15 minutos <ArrowUpRight size={15} /></button>
         </nav>
         <button className="mobile-toggle" aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
-        {menuOpen && <nav className="mobile-nav" aria-label="Navegación móvil"><a href="#sobre-nosotros" onClick={() => setMenuOpen(false)}>Sobre nosotros</a><button onClick={() => open('blog')}>Blog</button><button onClick={() => open('booking')}>Agenda diagnóstico de 15 minutos <ArrowUpRight size={16} /></button></nav>}
+        {menuOpen && <nav className="mobile-nav" aria-label="Navegación móvil"><a href="#sobre-nosotros" onClick={() => setMenuOpen(false)}>Sobre nosotros</a><a href="/blog">Blog</a><button data-conversion="diagnostic-cta" onClick={() => open('booking')}>Agenda diagnóstico de 15 minutos <ArrowUpRight size={16} /></button></nav>}
       </header>
 
       <main>
@@ -43,7 +43,7 @@ export function AtlasLanding() {
             <div className="eyebrow"><Sparkles size={14} aria-hidden="true" /> MENOS COMPLEJIDAD. MÁS POSIBILIDADES.</div>
             <h1 id="hero-heading">Tecnología que impulsa.<br /><span>Empresas que avanzan.</span></h1>
             <p className="hero-description">Empresa tecnológica que ayuda a otras empresas a simplificar, digitalizar y mejorar sus operaciones mediante <strong>software, automatización e inteligencia artificial.</strong></p>
-            <div className="hero-actions"><button className="primary-cta" onClick={() => open('booking')}>Hablemos de tu próximo paso <ArrowUpRight size={19} /></button><a className="secondary-cta" href="#sobre-nosotros">Conoce Atlas <ArrowDown size={16} /></a></div>
+            <div className="hero-actions"><button className="primary-cta" data-conversion="diagnostic-cta" onClick={() => open('booking')}>Hablemos de tu próximo paso <ArrowUpRight size={19} /></button><a className="secondary-cta" href="#sobre-nosotros">Conoce Atlas <ArrowDown size={16} /></a></div>
             <div className="hero-note"><Clock3 size={13} /><span>15 minutos para descubrir nuevas posibilidades.</span></div>
           </div>
           <div className="capabilities container" aria-label="Nuestras especialidades">
@@ -53,12 +53,12 @@ export function AtlasLanding() {
         </section>
 
         <section id="sobre-nosotros" className="about container" aria-labelledby="about-heading">
-          <div className="about-intro"><span className="section-label"><span /> TU PRÓXIMO ALIADO TECNOLÓGICO</span><h2 id="about-heading">La tecnología es el medio.<br /><span>Tu crecimiento, el propósito.</span></h2><p>Conectamos estrategia y tecnología para transformar procesos complejos en soluciones simples. Menos tareas repetitivas, más tiempo para lo que realmente importa.</p><button className="text-link" onClick={() => open('booking')}>Construyamos lo que sigue <ArrowUpRight size={16} /></button></div>
+          <div className="about-intro"><span className="section-label"><span /> TU PRÓXIMO ALIADO TECNOLÓGICO</span><h2 id="about-heading">La tecnología es el medio.<br /><span>Tu crecimiento, el propósito.</span></h2><p>Conectamos estrategia y tecnología para transformar procesos complejos en soluciones simples. Menos tareas repetitivas, más tiempo para lo que realmente importa.</p><button className="text-link" data-conversion="diagnostic-cta" onClick={() => open('booking')}>Construyamos lo que sigue <ArrowUpRight size={16} /></button></div>
           <div className="principles"><article><span className="principle-icon"><Workflow size={20} /></span><div><h3>Simple por diseño</h3><p>Soluciones que se adaptan a tu operación.<br />No al revés.</p></div><span className="principle-number">01</span></article><article><span className="principle-icon"><AudioLines size={20} /></span><div><h3>Conectados con tu negocio</h3><p>Entendemos tus desafíos antes de escribir<br className="desktop-break" /> la primera línea de código.</p></div><span className="principle-number">02</span></article><article><span className="principle-icon"><ShieldCheck size={20} /></span><div><h3>Confianza desde el inicio</h3><p>Transparencia, colaboración y cuidado<br className="desktop-break" /> de tus datos en cada paso.</p></div><span className="principle-number">03</span></article></div>
         </section>
       </main>
 
-      <footer className="site-footer"><div className="container"><div className="footer-top"><div><Brand compact /><p>Hacemos simple el siguiente paso.</p></div><div className="footer-links"><div><span>EXPLORA</span><a href="#sobre-nosotros">Sobre nosotros</a><button onClick={() => open('blog')}>Blog <ArrowUpRight size={12} /></button><button onClick={() => open('future')}>Futuros enlaces <span className="soon">PRONTO</span></button></div><div><span>LEGAL Y CONFIANZA</span><button onClick={() => open('terms')}>Términos de servicio</button><button onClick={() => open('privacy')}>Privacidad de datos</button><button onClick={() => open('compliance')}>Ley de datos · Chile <ArrowUpRight size={12} /></button></div></div></div><div className="footer-bottom"><span>Atlas Solutions SpA - 2026</span><span>Hecho con propósito. Pensado para el futuro.</span><button className="online-button" onClick={() => open('booking')}><span /> Online <ArrowUpRight size={12} /></button></div></div></footer>
+      <footer className="site-footer"><div className="container"><div className="footer-top"><div><Brand compact /><p>Hacemos simple el siguiente paso.</p></div><div className="footer-links"><div><span>EXPLORA</span><a href="#sobre-nosotros">Sobre nosotros</a><a href="/blog">Blog <ArrowUpRight size={12} /></a><button onClick={() => open('future')}>Futuros enlaces <span className="soon">PRONTO</span></button></div><div><span>LEGAL Y CONFIANZA</span><button onClick={() => open('terms')}>Términos de servicio</button><a href="/privacy">Privacidad de datos</a><button onClick={() => open('compliance')}>Ley de datos · Chile <ArrowUpRight size={12} /></button></div></div></div><div className="footer-bottom"><span>Atlas Solutions SpA - 2026</span><span>Hecho con propósito. Pensado para el futuro.</span><button className="online-button" data-conversion="diagnostic-cta" onClick={() => open('booking')}><span /> Online <ArrowUpRight size={12} /></button></div></div></footer>
       <dialog ref={dialog} className="info-dialog" aria-labelledby="dialog-title" onClick={event => { if (event.target === event.currentTarget) dialog.current?.close() }}><button className="dialog-close" onClick={() => dialog.current?.close()} aria-label="Cerrar"><X size={20} /></button><span className="section-label">{information[active].label}</span><h2 id="dialog-title">{information[active].title}</h2><p>{information[active].text}</p><div className="dialog-note"><Check size={17} /><span>{information[active].note}</span></div><button className="text-link" onClick={() => dialog.current?.close()}>Volver a Atlas <ArrowRight size={16} /></button></dialog>
     </div>
   )

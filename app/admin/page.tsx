@@ -1,0 +1,7 @@
+import Link from 'next/link'
+import {desc,eq} from 'drizzle-orm'
+import {requireAdmin} from '@/lib/admin'
+import {db} from '@/lib/db'
+import {posts} from '@/lib/db/schema'
+import {SignOut} from '@/components/admin-login'
+export default async function Page(){const user=await requireAdmin();const articles=await db.select().from(posts).where(eq(posts.userId,user.id)).orderBy(desc(posts.updatedAt));return <><span className="section-label">ATLAS / ADMINISTRACIÓN</span><div className="blog-toolbar"><h1>Tu contenido, en un lugar.</h1><SignOut/></div><div className="blog-toolbar"><Link className="primary-cta" href="/admin/posts/new">Crear artículo +</Link><Link href="/admin/guide">Guía de publicación →</Link></div><div className="post-list">{articles.length?articles.map(post=><Link className="post-card" key={post.id} href={`/admin/posts/${post.id}`}><span className="section-label">{post.status==='published'?'PUBLICADO':'BORRADOR'}</span><h2>{post.title}</h2><p>{post.excerpt}</p><span>Editar artículo →</span></Link>):<p>Aún no hay artículos. Crea el primero y guárdalo como borrador.</p>}</div><aside className="analytics-note"><h2>Tráfico y conversiones</h2><p>Consulta visitas en Vercel Analytics y, después de configurar tu ID, en Google Analytics. Los clics en diagnóstico se registran como interés, no como reservas confirmadas.</p><a href="https://analytics.google.com/" target="_blank" rel="noreferrer">Abrir Google Analytics ↗</a></aside></>}
