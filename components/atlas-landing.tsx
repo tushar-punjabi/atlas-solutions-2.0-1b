@@ -14,7 +14,7 @@ const information = {
 type InformationKey = keyof typeof information
 
 function Brand({ compact = false }: { compact?: boolean }) {
-  return <a href="#inicio" className={`brand ${compact ? 'brand-small' : ''}`} aria-label="Atlas Solutions, inicio"><span className="brand-mark" aria-hidden="true"><span /><span /><span /></span><span>atlas<span className="brand-sub">solutions</span></span></a>
+  return <a href="#inicio" className={`brand ${compact ? 'brand-small' : ''}`} aria-label="Atlas Solutions, inicio"><span className="brand-mark" aria-hidden="true"><span /><span /><span /></span><span>Atlas<span style={{ color: 'var(--primary)' }}>.</span></span></a>
 }
 
 export function AtlasLanding() {
