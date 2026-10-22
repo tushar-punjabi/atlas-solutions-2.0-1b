@@ -8,28 +8,16 @@ const displayFont = Space_Grotesk({ subsets: ['latin'], variable: '--font-displa
 const bodyFont = Inter({ subsets: ['latin'], variable: '--font-body', display: 'swap' })
 
 export const metadata: Metadata = {
-  title: 'Atlas Solutions | Tecnología que impulsa',
+  title: 'Atlas Solutions | Software, automatización e IA en Chile',
   description: 'Simplificamos, digitalizamos y mejoramos las operaciones de tu empresa mediante software, automatización e inteligencia artificial. Atlas Solutions SpA, Chile.',
   metadataBase: new URL(siteUrl),
-  alternates: { canonical: '/' },
-  openGraph: { type: 'website', locale: 'es_CL', siteName: 'Atlas Solutions', title: 'Atlas Solutions | Tecnología que impulsa', description: 'Software, automatización e inteligencia artificial para empresas.' },
+  robots: { index: true, follow: true },
+  category: 'technology',
+  openGraph: { url: '/', type: 'website', locale: 'es_CL', siteName: 'Atlas Solutions', title: 'Atlas Solutions | Tecnología que impulsa', description: 'Software, automatización e inteligencia artificial para empresas.' },
   twitter: { card: 'summary', title: 'Atlas Solutions', description: 'Tecnología que simplifica tu operación.' },
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: [{ url: '/atlas-favicon.png', type: 'image/png' }],
+    apple: '/atlas-favicon.png',
   },
 }
 

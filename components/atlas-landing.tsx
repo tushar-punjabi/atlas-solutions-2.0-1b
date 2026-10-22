@@ -24,6 +24,7 @@ export function AtlasLanding() {
   const open = (key: InformationKey) => { setActive(key); setMenuOpen(false); dialog.current?.showModal() }
   return (
     <div id="inicio" className="site-shell">
+      <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-background focus:p-4">Saltar al contenido</a>
       <header className="site-header container">
         <Brand />
         <nav aria-label="Navegación principal" className="desktop-nav">
@@ -35,7 +36,7 @@ export function AtlasLanding() {
         {menuOpen && <nav className="mobile-nav" aria-label="Navegación móvil"><a href="#sobre-nosotros" onClick={() => setMenuOpen(false)}>Sobre nosotros</a><a href="/blog">Blog</a><button data-conversion="diagnostic-cta" onClick={() => open('booking')}>Agenda diagnóstico de 15 minutos <ArrowUpRight size={16} /></button></nav>}
       </header>
 
-      <main>
+      <main id="contenido" tabIndex={-1}>
         <section className="hero" aria-labelledby="hero-heading">
           <div className="hero-grid" aria-hidden="true" />
           <div className="orbital orbital-one" aria-hidden="true" /><div className="orbital orbital-two" aria-hidden="true" />
