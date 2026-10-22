@@ -1,0 +1,4 @@
+'use client'
+import {useActionState} from 'react'
+import {setupAdmin} from '@/app/admin/setup/actions'
+export function AdminSetup(){const [state,action,pending]=useActionState(setupAdmin,{message:''});return <form action={action} className="editor-form"><p>Solo para el propietario. La cuenta se crea con el correo configurado en ADMIN_EMAIL. No compartas la clave de configuración.</p><label>Clave de configuración (BETTER_AUTH_SECRET)<input name="secret" type="password" required autoComplete="off" /></label><label>Nueva contraseña de administrador<input name="password" type="password" minLength={12} maxLength={128} required autoComplete="new-password" /></label><button className="primary-cta" disabled={pending}>Crear cuenta de administrador</button><p role="status">{state.message}</p></form>}

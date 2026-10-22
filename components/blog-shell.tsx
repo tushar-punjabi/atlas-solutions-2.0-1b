@@ -1,0 +1,2 @@
+import Link from 'next/link'
+export function BlogShell({children}: {children: React.ReactNode}) { return <div className="blog-shell"><header className="blog-header"><Link href="/" className="brand">Atlas<span className="atlas-dot" /></Link><nav><Link href="/blog">Blog</Link><Link href="/">Volver al inicio ↗</Link></nav></header><main className="blog-main">{children}</main><footer className="blog-footer">Atlas Solutions SpA - 2026 <Link href="/privacy">Privacidad de datos</Link></footer></div> }
