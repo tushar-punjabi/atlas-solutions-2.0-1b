@@ -10,7 +10,7 @@ const bodyFont = Inter({ subsets: ['latin'], variable: '--font-body', display: '
 export const metadata: Metadata = {
   title: 'Atlas Solutions | Software, automatización e IA en Chile',
   description: 'Simplificamos, digitalizamos y mejoramos las operaciones de tu empresa mediante software, automatización e inteligencia artificial. Atlas Solutions SpA, Chile.',
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL('https://atlasolutions.cl'),
   robots: { index: true, follow: true },
   category: 'technology',
   openGraph: { url: '/', type: 'website', locale: 'es_CL', siteName: 'Atlas Solutions', title: 'Atlas Solutions | Tecnología que impulsa', description: 'Software, automatización e inteligencia artificial para empresas.' },
