@@ -1,6 +1,5 @@
 'use client'; // Requerido para componentes interactivos en App Router
 
-import { useState } from 'react';
 import Script from 'next/script';
 import { AtlasLanding } from '@/components/atlas-landing';
 import { siteUrl } from '@/lib/site';
@@ -15,20 +14,18 @@ declare global {
 }
 
 export default function Page() {
-  const [isTallyLoaded, setIsTallyLoaded] = useState(false);
-  const [isCalendlyLoaded, setIsCalendlyLoaded] = useState(false);
-
   // Tu enlace personalizado de Calendly integrado directamente
-  const CALENDLY_URL = 'https://calendly.com/moholay/new-meeting';
+  const CALENDLY_URL = 'https://calendly.com';
 
   // Manejador del popup de Calendly
   const abrirCalendly = (): void => {
-    if (typeof window !== 'undefined' && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: CALENDLY_URL,
-      });
-    } else {
-      console.warn('El script de Calendly aún no se ha cargado por completo.');
+    if (typeof window !== 'undefined') {
+      if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+        window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+      } else {
+        // Respaldo de emergencia si el script CDN es bloqueado (Abre en pestaña nueva)
+        window.open(CALENDLY_URL, '_blank');
+      }
     }
   };
 
@@ -42,6 +39,9 @@ export default function Page() {
           width: 700,
           autoClose: 5000, 
         });
+      } else {
+        // Respaldo de emergencia si Tally no responde
+        window.open('https://tally.so', '_blank');
       }
     }
   };
@@ -85,7 +85,6 @@ export default function Page() {
       <Script 
         src="https://tally.so" 
         strategy="afterInteractive"
-        onLoad={() => setIsTallyLoaded(true)} 
       />
       
       {/* Estilos y Script Oficiales de Calendly */}
@@ -96,7 +95,6 @@ export default function Page() {
       <Script
         src="https://calendly.com"
         strategy="afterInteractive"
-        onLoad={() => setIsCalendlyLoaded(true)}
       />
 
       {/* Inyección JSON-LD SEO */}
@@ -109,31 +107,26 @@ export default function Page() {
       <main style={{ fontFamily: 'system-ui, sans-serif', padding: '40px' }}>
         <AtlasLanding />
 
-        {/* Botón de Calendly centrado en el flujo de la página */}
+        {/* Botón de Calendly sin restricciones de estado */}
         <div style={{ textAlign: 'center', margin: '40px 0' }}>
           <button
             onClick={abrirCalendly}
-            disabled={!isCalendlyLoaded}
             style={{
               padding: '16px 32px',
               fontSize: '18px',
               fontWeight: '700',
-              backgroundColor: isCalendlyLoaded ? '#006BFF' : '#a0aec0', // Azul Corporativo de Calendly
+              backgroundColor: '#006BFF', // Azul Calendly siempre activo
               color: 'white',
               border: 'none',
               borderRadius: '8px',
-              cursor: isCalendlyLoaded ? 'pointer' : 'not-allowed',
+              cursor: 'pointer',
               boxShadow: '0 4px 14px rgba(0, 107, 255, 0.3)',
               transition: 'all 0.2s ease',
             }}
-            onMouseEnter={(e) => {
-              if (isCalendlyLoaded) e.currentTarget.style.backgroundColor = '#0053C9';
-            }}
-            onMouseLeave={(e) => {
-              if (isCalendlyLoaded) e.currentTarget.style.backgroundColor = '#006BFF';
-            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0053C9'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#006BFF'}
           >
-            {isCalendlyLoaded ? '📅 Agenda diagnóstico de 15 min' : '⏳ Cargando agenda...'}
+            📅 Agenda diagnóstico de 15 min
           </button>
         </div>
       </main>
@@ -141,7 +134,6 @@ export default function Page() {
       {/* Botón de Tally fijo abajo a la derecha */}
       <button 
         onClick={abrirTally}
-        disabled={!isTallyLoaded} 
         style={{
           position: 'fixed',
           bottom: '20px',
@@ -150,22 +142,18 @@ export default function Page() {
           padding: '12px 24px',
           fontSize: '16px',
           fontWeight: '600',
-          backgroundColor: isTallyLoaded ? '#0070f3' : '#a0aec0', 
+          backgroundColor: '#0070f3', // Azul Next.js siempre activo
           color: 'white',
           border: 'none',
           borderRadius: '30px', 
-          cursor: isTallyLoaded ? 'pointer' : 'not-allowed',
+          cursor: 'pointer',
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)', 
           transition: 'background-color 0.2s ease',
         }}
-        onMouseEnter={(e) => {
-          if (isTallyLoaded) e.currentTarget.style.backgroundColor = '#0051cb';
-        }}
-        onMouseLeave={(e) => {
-          if (isTallyLoaded) e.currentTarget.style.backgroundColor = '#0070f3';
-        }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0051cb'}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0070f3'}
       >
-        {isTallyLoaded ? '💬 Contacto' : '⏳...'}
+        💬 Contacto
       </button>
     </>
   );
