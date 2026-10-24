@@ -1,20 +1,21 @@
 'use client'; // Requerido para componentes interactivos en App Router
 
+import { useState } from 'react';
 import Script from 'next/script';
-import { AtlasLanding } from '@/components/atlas-landing'
-import { siteUrl } from '@/lib/site'
+import { AtlasLanding } from '@/components/atlas-landing';
+import { siteUrl } from '@/lib/site';
 
-// Extendemos la interfaz global de Window para que TypeScript reconozca el objeto Tally
+// Extendemos la interfaz global de Window con ambas variantes posibles del objeto
 declare global {
   interface Window {
-    Tally?: {
-      openPopup: (formId: string, options?: Record<string, any>) => void;
-      closePopup: (formId: string) => void;
-    };
+    Tally?: any;
+    tally?: any;
   }
 }
 
 export default function Page() {
+  const [scriptCargado, setScriptCargado] = useState(false);
+
   // Datos estructurados SEO (Schema.org)
   const structured = {
     '@context': 'https://schema.org',
@@ -49,23 +50,29 @@ export default function Page() {
   };
 
   const abrirFormulario = (): void => {
-    if (typeof window !== 'undefined' && window.Tally) {
-      window.Tally.openPopup('aOQW4Z', {
-        layout: 'modal',
-        width: 700,
-        autoClose: 5000, 
-      });
-    } else {
-      console.warn('El script de Tally aún no se ha inicializado.');
+    if (typeof window !== 'undefined') {
+      // Validamos ambas instancias globales expuestas por el script
+      const instanciaTally = window.tally || window.Tally;
+
+      if (instanciaTally && typeof instanciaTally.openPopup === 'function') {
+        instanciaTally.openPopup('aOQW4Z', {
+          layout: 'modal',
+          width: 700,
+          autoClose: 5000, 
+        });
+      } else {
+        console.warn('El script de Tally se descargó pero el objeto global no está listo.');
+      }
     }
   };
 
   return (
     <>
-      {/* Carga corregida y optimizada del script de Tally */}
+      {/* Script corregido con eventos de ciclo de vida de Next.js */}
       <Script 
-        src="https://tally.so" 
-        strategy="afterInteractive" 
+        src="https://tally.so/widgets/embed.js" 
+        strategy="afterInteractive"
+        onLoad={() => setScriptCargado(true)} // Se activa cuando el archivo JS está listo
       />
 
       {/* Inyección segura del JSON-LD para SEO */}
@@ -74,12 +81,13 @@ export default function Page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structured).replace(/</g, '\\u003c') }} 
       />
 
-      {/* El contenido visual real de tu Landing Page */}
+      {/* Tu Landing Page Real */}
       <AtlasLanding />
 
       {/* Botón flotante fijo en la esquina inferior derecha */}
       <button 
         onClick={abrirFormulario}
+        disabled={!scriptCargado} // Deshabilitado temporalmente hasta que se descargue el CDN
         style={{
           position: 'fixed',
           bottom: '20px',
@@ -88,18 +96,22 @@ export default function Page() {
           padding: '12px 24px',
           fontSize: '16px',
           fontWeight: '600',
-          backgroundColor: '#0070f3', 
+          backgroundColor: scriptCargado ? '#0070f3' : '#a0aec0', // Gris si no está listo
           color: 'white',
           border: 'none',
           borderRadius: '30px', 
-          cursor: 'pointer',
+          cursor: scriptCargado ? 'pointer' : 'not-allowed',
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)', 
-          transition: 'background-color 0.2s ease',
+          transition: 'background-color 0.2s ease, transform 0.1s ease',
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0051cb')}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#0070f3')}
+        onMouseEnter={(e) => {
+          if (scriptCargado) e.currentTarget.style.backgroundColor = '#0051cb';
+        }}
+        onMouseLeave={(e) => {
+          if (scriptCargado) e.currentTarget.style.backgroundColor = '#0070f3';
+        }}
       >
-        💬 Contacto
+        {scriptCargado ? '💬 Contacto' : '⏳ Cargando...'}
       </button>
     </>
   );
