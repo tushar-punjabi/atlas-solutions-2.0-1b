@@ -15,7 +15,7 @@ declare global {
 
 export default function Page() {
   // Tu enlace personalizado de Calendly integrado directamente
-  const CALENDLY_URL = 'https://calendly.com';
+  const CALENDLY_URL = 'https://calendly.com/moholay/new-meeting';
 
   // Manejador del popup de Calendly
   const abrirCalendly = (): void => {
