@@ -1,13 +1,10 @@
+
 import type { MetadataRoute } from 'next'
-import { eq } from 'drizzle-orm'
-import { db } from '@/lib/db'
-import { posts } from '@/lib/db/schema'
 
 const baseUrl = 'https://atlasolutions.cl'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Public pages
-  const staticPages: MetadataRoute.Sitemap = [
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
     {
       url: baseUrl,
       changeFrequency: 'weekly',
@@ -34,24 +31,4 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     },
   ]
-
-  // Published blog articles
-  const publishedPosts = await db
-    .select({
-      slug: posts.slug,
-      updatedAt: posts.updatedAt,
-    })
-    .from(posts)
-    .where(eq(posts.status, 'published'))
-
-  const blogPages: MetadataRoute.Sitemap = publishedPosts.map(
-    (post) => ({
-      url: `${baseUrl}/blog/${encodeURIComponent(post.slug)}`,
-      lastModified: post.updatedAt,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    })
-  )
-
-  return [...staticPages, ...blogPages]
 }
