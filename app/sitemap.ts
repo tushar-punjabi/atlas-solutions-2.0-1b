@@ -1,4 +1,3 @@
-
 import type { MetadataRoute } from 'next'
 import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
