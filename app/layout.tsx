@@ -33,13 +33,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <head>
-        <Script
-          src="https://cloud.umami.is/script.js"
-          data-website-id="751629c7-5a9c-4deb-b390-ee44129f02f7"
-          strategy="afterInteractive"
-        />
-      </head>
       <body className={`${displayFont.variable} ${bodyFont.variable} antialiased`}>
         {children}
         <SiteAnalytics />
